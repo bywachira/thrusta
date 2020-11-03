@@ -9,6 +9,7 @@ import mongoose from "mongoose"
 
 import config from "./config"
 import v1 from "./v1"
+import parsePayload from "./v1/helpers/parse-payload"
 import NodeController from "./v1/controllers/node";
 import * as ProcessController from "./v1/controllers/process";
 
@@ -60,14 +61,16 @@ wsServer.on("request", (request: SocketServer.request): any => {
     // })
 
     connection.on("message", (data: any) => {
-        const result = new NodeController({}, {}).verifyNode(data.token, data.node)
+        console.log(parsePayload(data.utf8Data).payload)
+        const payload = parsePayload(data.utf8Data).payload
+        const result = new NodeController({}, {}).verifyNode(payload.token, payload.node)
 
         result.then((res: any) => {
             ProcessController.fetchActiveProcesses(`${res.account}`).then((Res: any) => {
                 connection.emit("payload", Res)
             })
-        }).catch((err) => {
-            console.log(`Problem connecting`)
+        }).catch((err: any) => {
+            console.log(chalk.red(`[WS]: Error:\n[ERROR]: ${JSON.stringify(err)}`))
         })
     })
 
