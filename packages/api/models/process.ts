@@ -4,7 +4,7 @@ export interface IProcess {
     process_id: string
     is_complete: boolean
     commands: any
-    status: string
+    status?: string
     last_run?: string
     last_run_status?: string
     asleep?: boolean
@@ -21,7 +21,7 @@ export interface ProcessDoc extends mongoose.Document {
     process_id: string
     is_complete: boolean
     commands?: Array<any>
-    status: string,
+    status?: string,
     last_run?: string
     last_run_status?: string
     asleep?: boolean
@@ -45,7 +45,8 @@ const processSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            required: true,
+            required: false,
+            default: "dormant"
         },
         last_run: {
             type: String,

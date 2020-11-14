@@ -12,6 +12,7 @@ import v1 from "./v1"
 import parsePayload from "./v1/helpers/parse-payload"
 import NodeController from "./v1/controllers/node";
 import * as ProcessController from "./v1/controllers/process";
+import { Socket } from "dgram";
 
 mongoose.connect(config.mongo.uri, {
     useNewUrlParser: true,
@@ -54,20 +55,18 @@ const wsServer = new WebSocketServer({
 wsServer.on("request", (request: SocketServer.request): any => {
     const connection = request.accept(undefined, request.origin)
 
-    // connection.on("message", (message: SocketServer.IMessage) => {
-    //     console.log("Received Message: ", message.utf8Data)
-
-    //     connection.sendUTF("Hi this is a websocket server")
-    // })
-
+    connection.on("ping", (data: any) => {
+        console.log(data)
+    })
     connection.on("message", (data: any) => {
-        console.log(parsePayload(data.utf8Data).payload)
-        const payload = parsePayload(data.utf8Data).payload
+
+        const payload = JSON.parse(data.utf8Data)
         const result = new NodeController({}, {}).verifyNode(payload.token, payload.node)
 
         result.then((res: any) => {
-            ProcessController.fetchActiveProcesses(`${res.account}`).then((Res: any) => {
-                connection.emit("payload", Res)
+            console.log(res)
+            ProcessController.fetchActiveProcesses(`${res.account_id}`).then((Res: any) => {
+                connection.send(JSON.stringify(Res))
             })
         }).catch((err: any) => {
             console.log(chalk.red(`[WS]: Error:\n[ERROR]: ${JSON.stringify(err)}`))

@@ -25,7 +25,7 @@ class NodeController {
 
             if (node) {
                 if (node.active) {
-                    return { ...node, ...result };
+                    return { node, ...result };
                 } else {
                     throw {
                         message: "Node is inactive",
@@ -49,14 +49,14 @@ class NodeController {
 
             if (result) {
                 const account = await Account.findOne({
-                    email: result?.data,
+                    _id: result.id
                 });
 
                 if (account) {
                     return {
                         name: account.name,
                         email: account.email,
-                        account_id: account._id,
+                        account_id: result.id,
                         result: true,
                     };
                 } else {
