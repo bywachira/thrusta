@@ -1,0 +1,27 @@
+{
+  "name": "@thrusta/core",
+  "version": "0.0.1",
+  "description": "thrusta client state management core",
+  "main": "index.ts",
+  "repository": "https://github.com/bywachira/thrusta",
+  "author": "tesh254",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@types/react-redux": "^7.1.9",
+    "@types/redux-devtools": "^3.0.47",
+    "axios": "^0.21.0",
+    "react-redux": "^7.2.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0",
+    "redux-devtools": "^3.7.0"
+  },
+  "scripts": {
+    "lint": "eslint . --ext .ts"
+  }
+}
