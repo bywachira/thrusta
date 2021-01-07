@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { createStore, applyMiddleware } from "redux"
 // import { createDevTools } from "redux-devtools"
 import thunk from "redux-thunk"

@@ -2,6 +2,8 @@ import axios from "axios";
 import * as TYPES from "../constants";
 import config from "../../../config";
 import { setToken, fetchToken } from "../../../helpers/localstorage"
+import { Dispatch } from "../../../interfaces/redux";
+import client from "../../client";
 
 interface IAuthPayload {
     email: string;
@@ -39,6 +41,26 @@ export const signupUser = (payload: IAuthPayload) => async (dispatch: (...args) 
         .then(res => {
             dispatch({
                 type: TYPES.AUTH,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: TYPES.ERROR,
+                payload: err.response.data
+            })
+        })
+}
+
+export const getAccount = () => async (dispatch: Dispatch): Promise<any> => {
+    dispatch({
+        type: TYPES.LOADING,
+    })
+
+    return await client.get(`/account`)
+        .then(res => {
+            dispatch({
+                type: TYPES.ACCOUNT,
                 payload: res.data
             })
         })
