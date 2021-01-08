@@ -23,6 +23,7 @@ class AuthMiddleware {
                 res.status(201).json(Res);
             })
             .catch((err) => {
+                console.log(err)
                 res.status(err.status || 500).json({
                     message: err.message,
                     ...err,
