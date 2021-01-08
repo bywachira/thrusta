@@ -5,12 +5,15 @@ import { useRef } from "react";
 import { useState } from "react";
 import InputComponent from "../../components/input";
 import { FitContainer, TerminalContainer } from "./styles";
+import { commands } from "../../constants/command";
+import { CommandHistory } from "../../interfaces/zen";
 
-const CommandHistory: React.FC<{}> = (props): React.ReactElement => {
-  const [history, setHistory] = useState<any[]>([]);
+const Terminal: React.FC<{}> = (props): React.ReactElement => {
+  const [history, setHistory] = useState<CommandHistory[]>([]);
   const [currentKey, setCurrentKey] = useState<string>("");
   const [clear, setClear] = useState<boolean>(false);
   const [enterKey, setEnterKey] = useState<boolean>(false);
+  const [argz, setArguments] = useState<any[]>([]);
 
   const command_history: any = useRef();
 
@@ -27,8 +30,13 @@ const CommandHistory: React.FC<{}> = (props): React.ReactElement => {
 
   useEffect(() => {
     if (enterKey) {
-      const command = [currentKey];
-      setHistory([...history, ...command]);
+      setHistory([
+        ...history,
+        {
+          command: currentKey,
+          output: "",
+        },
+      ]);
       setClear(true);
       setEnterKey(false);
       command_history.current.scrollIntoView({ behavior: "smooth" });
@@ -39,19 +47,39 @@ const CommandHistory: React.FC<{}> = (props): React.ReactElement => {
     if (clear) {
       setCurrentKey("");
       setClear(false);
+      createArguments();
     }
   }, [clear]);
 
+  function createArguments() {
+    const _args = history[history.length - 1].command.split(" ");
+
+    setArguments(_args);
+  }
+
+  useEffect(() => {
+    const enteredCommand = argz[0];
+    if (commands[enteredCommand]?.exists) {
+      console.log("Is there");
+    }
+  }, [argz]);
+
   return (
     <TerminalContainer>
+      {console.log(argz)}
       <div></div>
       <FitContainer>
         <div ref={command_history}>
-          {history.reverse().map((command: string, idx: number) => {
+          {history.reverse().map((command: CommandHistory, idx: number) => {
             return (
-              <p className="break-words text-green-400 mb-2" key={idx}>
-                {command}
-              </p>
+              <div key={idx}>
+                <p className="break-words text-green-400 mb-2">
+                  {command.command}
+                </p>
+                <p className="break-words text-green-400 mb-2">
+                  {command.output}
+                </p>
+              </div>
             );
           })}
         </div>
@@ -66,4 +94,4 @@ const CommandHistory: React.FC<{}> = (props): React.ReactElement => {
   );
 };
 
-export default CommandHistory;
+export default Terminal;

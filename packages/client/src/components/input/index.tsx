@@ -1,11 +1,12 @@
 import React from "react";
 import { useEffect } from "react";
+import { CommandHistory } from "../../interfaces/zen";
 import { Input, InputContainer } from "./styles";
 
 type InputProps = {
   handleChange: (...args: any) => void;
   value: string;
-  history: string[];
+  history: CommandHistory[];
   clear: boolean;
 };
 

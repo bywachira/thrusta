@@ -1,3 +1,3 @@
-import CommandHistory from "./history";
+import CommandHistory from "./terminal";
 
 export { CommandHistory };
