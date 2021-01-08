@@ -12,6 +12,8 @@
   ],
   "scripts": {
     "api:dev": "yarn --cwd packages/api dev",
-    "api:build": "yarn --cwd packages/api build"
+    "api:build": "yarn --cwd packages/api build",
+    "client:start": "yarn --cwd packages/client start",
+    "client:build": "yarn --cwd packages/client build"
   }
 }
