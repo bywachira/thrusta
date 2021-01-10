@@ -5,6 +5,7 @@ interface ILog {
     process: string
     node: string
     type: string
+    account: string;
 }
 
 interface logModelInterface extends mongoose.Model<LogDoc> {
@@ -15,7 +16,8 @@ interface LogDoc extends mongoose.Document {
     log: string
     process: string
     node: string,
-    type: string
+    type: string;
+    account:  string;
 }
 
 const logSchema = new mongoose.Schema(
@@ -36,6 +38,11 @@ const logSchema = new mongoose.Schema(
         },
         type: {
             type: String,
+            required: true
+        },
+        account: {
+            type: Schema.Types.ObjectId,
+            ref: "Account",
             required: true
         }
     },

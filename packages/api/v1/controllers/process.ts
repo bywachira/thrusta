@@ -78,11 +78,12 @@ export const saveLog = async (node_id: string | undefined, process_id: string | 
     return { log: newLog, process: updatedProcess };
 };
 
-export const createProcess = async (process_name: string | undefined, commands: Array<any> | undefined, user_id: string | undefined) => {
+export const createProcess = async (process_name: string | undefined, commands: Array<any> | undefined, user_id: string | undefined, node_id: string | undefined) => {
     const newProcess = new Process({
         process_id: randomString.generate(8),
         process_name,
         developer: user_id,
+        node_id
     });
 
     await newProcess.save();
@@ -175,7 +176,7 @@ export const deleteProcess = async (process_id: string | undefined) => {
     }
 };
 
-export const addLog = async (process_id: string, log: string, node: string, type: string) => {
+export const addLog = async (process_id: string, log: string, node: string, type: string, account: string) => {
     const fetchNode: NodeDoc | null = await Node.findOne({ node_id: node });
 
     const newLog = new Logs({
@@ -183,6 +184,7 @@ export const addLog = async (process_id: string, log: string, node: string, type
         process: process_id,
         node: fetchNode?._id,
         type,
+        account
     });
 
     await newLog.save();

@@ -12,7 +12,10 @@ const AppReducer = (state: any = {
     message: "",
     active_processes: [],
     commands: [],
-    command: {}
+    command: {},
+    current_status: {},
+    secondaryLoading: false,
+    updating: false
 }, action: Action) => {
     switch (action.type) {
         case TYPES.APP_LOADING:
@@ -92,7 +95,31 @@ const AppReducer = (state: any = {
             return {
                 ...state,
                 node: action.payload.node,
-                isLoading: false
+                isLoading: false,
+                updating: false,
+                close: true
+            }
+        case TYPES.MONITOR:
+            return {
+                ...state,
+                ...action.payload
+            }
+        case TYPES.CURRENT_SERVER_STATUS:
+            return {
+                ...state,
+                current_status: action.payload.current_status,
+                secondaryLoading: false
+            }
+        case TYPES.SIDE_LOADING:
+            return {
+                ...state,
+                secondaryLoading: true
+            }
+        case TYPES.UPDATING:
+            return {
+                ...state,
+                updating: true,
+                close: false
             }
         default:
             return state

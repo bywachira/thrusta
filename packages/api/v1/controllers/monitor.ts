@@ -4,13 +4,16 @@ import Node from "../../models/node"
 
 class MonitorController {
     private node_id: string;
-    constructor(node_id: string) {
+    private account_id: string;
+    constructor(node_id: string, account_id: string) {
         this.node_id = node_id;
+        this.account_id = account_id;
     }
 
     private async getNode() {
         const get_node = await Node.findOne({
-            node_id: this.node_id
+            node_id: this.node_id,
+            account: this.account_id
         })
 
         if (get_node) {
@@ -29,8 +32,8 @@ class MonitorController {
 
         if (node.node._id) {
 
-            const monitor = await Monitor.find({ node_id: node }).sort({
-                createdAt: "asc"
+            const monitor = await Monitor.find({ node: node.node._id }).sort({
+                createdAt: "desc"
             })
 
             return this.formatData(monitor)
@@ -41,6 +44,24 @@ class MonitorController {
                 network: [],
                 disk: [],
                 uptime: []
+            }
+        }
+    }
+
+    public async getLatestMonitorData() {
+        const { node } = await this.getNode()
+
+        if (node._id) {
+            const data = await Monitor.find({ node: node._id }).sort({
+                createdAt: "desc"
+            }).limit(1)
+
+            return {
+                current_status: data[0] || {}
+            }
+        } else {
+            return {
+                current_status: {}
             }
         }
     }

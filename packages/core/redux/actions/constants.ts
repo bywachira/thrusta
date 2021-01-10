@@ -16,3 +16,7 @@ export const DELETE_PROCESS = "@thrusta/delete-process";
 export const SLEEP_PROCESS = "@thrusta/sleep-process";
 export const APP_LOADING = "@thrusta/app-loading";
 export const UPDATE_NODE_NAME = "@thrusta/update-node-name";
+export const MONITOR = "@thrusta/server-monitoring";
+export const CURRENT_SERVER_STATUS = "@thrusta/current-server-status";
+export const SIDE_LOADING = "@thrusta/app-secondary-loading";
+export const UPDATING = "@thrusta/update-node";

@@ -56,3 +56,7 @@ input:checked~.toggle__dot {
   scrollbar-width: none;
   /* Firefox */
 }
+
+button {
+  outline: none;
+}

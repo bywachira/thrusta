@@ -47,7 +47,8 @@ export const createProcess = (req: any, res: Response, next: NextFunction) => {
     ProcessController.createProcess(
         req.body.process_name,
         req.body.commands,
-        req.account._id
+        req.account._id,
+        req.body.node_id
     )
         .then((Res) => {
             res.status(201).json(Res);
@@ -100,7 +101,7 @@ export const addLog = (req: any, res: Response, next: NextFunction) => {
         req.body.process_id,
         req.body.log,
         req.body.node,
-        req.body.type
+        req.body.type, req.account._id
     )
         .then((Res) => {
             res.status(201).json(Res);

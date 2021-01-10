@@ -31,7 +31,7 @@ export interface IServerData {
     memory: IMemory;
     network: INetwork[];
     disk: IDisk[];
-    last_ping: string;
+    last_ping?: number;
     uptime: string;
 }
 
@@ -40,6 +40,16 @@ interface monitorModelInterface extends mongoose.Model<MonitorDoc> {
 }
 
 export interface MonitorDoc extends mongoose.Document, IServerData { }
+
+declare global {
+    interface Date {
+        getUTCTime: () => number;
+    }
+}
+
+Date.prototype.getUTCTime = function () {
+    return this.getTime() - (this.getTimezoneOffset() * 60000);
+};
 
 const monitorSchema = new mongoose.Schema({
     node: {
@@ -64,8 +74,8 @@ const monitorSchema = new mongoose.Schema({
         required: false
     },
     last_ping: {
-        type: String,
-        default: new Date().toISOString()
+        type: Number,
+        default: new Date()
     },
     uptime: {
         type: String,

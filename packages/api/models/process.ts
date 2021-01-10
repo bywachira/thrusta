@@ -11,6 +11,7 @@ export interface IProcess {
     logs?: Array<any>
     developer: string
     process_name: string
+    node_id: string;
 }
 
 interface processModelInterface extends mongoose.Model<ProcessDoc> {
@@ -28,6 +29,7 @@ export interface ProcessDoc extends mongoose.Document {
     logs?: Array<any>
     developer: string
     process_name: string
+    node_id: string;
 }
 
 const processSchema = new mongoose.Schema(
@@ -70,6 +72,10 @@ const processSchema = new mongoose.Schema(
         process_name: {
             type: String,
             required: true
+        },
+        node_id: {
+            type: Schema.Types.ObjectId,
+            ref: "Node"
         }
     },
     {

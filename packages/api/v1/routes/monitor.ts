@@ -8,4 +8,6 @@ router.get("/monitoring/:node_id", Checkers.isLogggedin, Checkers.hasPassword, C
 
 router.post("/monitoring/:node_id", Checkers.isLogggedin, Checkers.hasPassword, Checkers.isVerified, MonitorMiddleware.createMonitor)
 
+router.get("/monitoring/latest/:node_id", Checkers.isLogggedin, Checkers.hasPassword, Checkers.isVerified, MonitorMiddleware.getLatestMonitorData)
+
 export default router;

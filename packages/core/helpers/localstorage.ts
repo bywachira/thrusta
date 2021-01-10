@@ -16,3 +16,11 @@ export function fetchToken(): string | undefined | null {
 export function removeToken(): void {
     return localStorage.removeItem("x-jwt-token")
 }
+
+export function getDiffInMinutes(first_date: Date, second_date: Date): number {
+    let diff: number = (first_date.getTime() - second_date.getTime()) / 1000
+
+    diff /= 60
+
+    return Math.abs(Math.round(diff))
+}

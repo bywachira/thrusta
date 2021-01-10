@@ -5,6 +5,7 @@ import { setup } from "goober";
 import PrivateRoute from "./hoc/private-route";
 import HomePage from "./pages/home";
 import SingleNodePage from "./pages/single-node";
+import AddProcessPage from "./pages/add-process";
 
 setup(React.createElement);
 
@@ -19,6 +20,11 @@ function App() {
             exact={true}
             path="/nodes/:node_id"
             component={SingleNodePage}
+          />
+          <PrivateRoute
+            exact={true}
+            path="/add-process"
+            component={AddProcessPage}
           />
         </Switch>
       </Router>
