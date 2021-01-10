@@ -1,7 +1,11 @@
 export interface IUseSelector {
     app: {
         nodes: any[],
-        node: Object,
+        node: {
+            node_name?: string;
+            node_id: string;
+            active: boolean;
+        },
         processes: any[],
         process: Object,
         commands: any[],

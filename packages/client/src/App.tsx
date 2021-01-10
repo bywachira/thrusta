@@ -4,6 +4,7 @@ import ZenMode from "./pages/zen-mode";
 import { setup } from "goober";
 import PrivateRoute from "./hoc/private-route";
 import HomePage from "./pages/home";
+import SingleNodePage from "./pages/single-node";
 
 setup(React.createElement);
 
@@ -14,6 +15,11 @@ function App() {
         <Switch>
           <Route exact={true} path="/zen" component={ZenMode} />
           <PrivateRoute exact={true} path="/" component={HomePage} />
+          <PrivateRoute
+            exact={true}
+            path="/nodes/:node_id"
+            component={SingleNodePage}
+          />
         </Switch>
       </Router>
     </div>

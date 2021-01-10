@@ -43,6 +43,29 @@ class NodeController {
         }
     };
 
+    editNodeName = async (nodeId: string, node_name: string) => {
+        const node = await Node.findOne({
+            node_id: nodeId
+        })
+
+        if (node) {
+            Object.assign(node, {
+                node_name,
+            })
+
+            await node.save()
+
+            return {
+                node,
+                message: "Node updated"
+            }
+        } else {
+            throw {
+                message: "Something went wrong"
+            }
+        }
+    }
+
     fetchAccount = async (token: string): Promise<any> => {
         if (token) {
             const result: any = await jwtHelpers.decode_token(token);
@@ -81,6 +104,17 @@ class NodeController {
             nodes,
         };
     };
+
+    getNode = async (node_id: string) => {
+        const node = await Node.findOne({
+            account: this.account._id,
+            _id: node_id
+        }).populate("account", ["name", "email"])
+
+        return {
+            node
+        }
+    }
 
     deleteNode = async (node_id: string) => {
         const node = await Node.findOne({

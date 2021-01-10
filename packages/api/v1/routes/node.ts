@@ -33,4 +33,8 @@ router.post(
     NodeMiddleware.saveLog
 );
 
+router.patch("/node-name/:node_id", Checkers.isLogggedin, Checkers.hasPassword, Checkers.isVerified, NodeMiddleware.updateNodeName)
+
+router.get("/nodes/:node_id", Checkers.isLogggedin, Checkers.hasPassword, Checkers.isVerified, NodeMiddleware.getNode)
+
 export default router;

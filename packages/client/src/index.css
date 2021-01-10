@@ -41,7 +41,18 @@ code {
   transition: all 0.3s ease-in-out;
 }
 
-input:checked ~ .toggle__dot {
+input:checked~.toggle__dot {
   transform: translateX(100%);
   background-color: #f59e0b;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

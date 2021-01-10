@@ -82,6 +82,18 @@ const AppReducer = (state: any = {
                 nodes: action.payload.nodes,
                 isLoading: false
             }
+        case TYPES.NODE:
+            return {
+                ...state,
+                node: action.payload.node,
+                isLoading: false,
+            }
+        case TYPES.UPDATE_NODE_NAME:
+            return {
+                ...state,
+                node: action.payload.node,
+                isLoading: false
+            }
         default:
             return state
     }

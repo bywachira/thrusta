@@ -6,7 +6,7 @@ const Nav: React.FC<{}> = (): React.ReactElement => {
     <header className="mb-8">
       <div className="flex justify-between place-items-center max-w-7xl background-black">
         <div className="flex-auto">
-          <img src="./thrusta.svg" className="w-16" alt="" />
+          <img src="/thrusta.svg" className="w-16" alt="" />
         </div>
 
         <div className="flex justify-evenly place-items-center">

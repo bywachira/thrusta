@@ -64,7 +64,6 @@ wsServer.on("request", (request: SocketServer.request): any => {
         const result = new NodeController({}, {}).verifyNode(payload.token, payload.node)
 
         result.then((res: any) => {
-            console.log(res)
             ProcessController.fetchActiveProcesses(`${res.account_id}`).then((Res: any) => {
                 connection.send(JSON.stringify(Res))
             })

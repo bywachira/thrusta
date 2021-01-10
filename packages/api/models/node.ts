@@ -3,7 +3,8 @@ import mongoose, { Schema } from "mongoose";
 export interface INode {
     node_id: string
     account: string
-    active: boolean
+    active: boolean,
+    node_name?: string;
 }
 
 interface nodeModelInterface extends mongoose.Model<NodeDoc> {
@@ -14,6 +15,7 @@ export interface NodeDoc extends mongoose.Document {
     node_id: string
     account: string
     active: string
+    node_name?: string;
 }
 
 const nodeSchema = new mongoose.Schema(
@@ -26,6 +28,10 @@ const nodeSchema = new mongoose.Schema(
             type: Schema.Types.ObjectId,
             ref: "Account",
             required: true,
+        },
+        node_name: {
+            type: String,
+            required: false
         },
         active: {
             type: Boolean,

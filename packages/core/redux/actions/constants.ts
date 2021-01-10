@@ -15,3 +15,4 @@ export const DELETE_COMMAND = "@thrusta/delete-command";
 export const DELETE_PROCESS = "@thrusta/delete-process";
 export const SLEEP_PROCESS = "@thrusta/sleep-process";
 export const APP_LOADING = "@thrusta/app-loading";
+export const UPDATE_NODE_NAME = "@thrusta/update-node-name";

@@ -14,7 +14,7 @@ function Processes(props: ProcessProps) {
   }
 
   return (
-    <div className="flex justify-left p-1 flex-wrap">
+    <div className="flex justify-left p-1 overflow-x-scroll no-scrollbar">
       {props.processes.map((item) => {
         return (
           <div className="text-white mr-4 w-80 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 p-4 rounded-2xl">
