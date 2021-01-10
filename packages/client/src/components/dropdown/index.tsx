@@ -26,9 +26,11 @@ function Dropdown(props: IDropdown): React.ReactElement {
   return (
     <>
       <button
-        className="bg-white w-56 justify-between p-2 rounded text-grey-700 shadow-inner flex place-items-center"
+        className={`bg-white ${
+          props.width || "w-56"
+        } justify-between p-2 rounded text-grey-700 shadow-inner flex place-items-center`}
         tabIndex={1}
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen(!isOpen)}
       >
         <div className="font-medium text-gray-800 truncate text-center md:text-left font-semibold">
           {activeItem.label ? activeItem.label : props.label}
@@ -49,7 +51,11 @@ function Dropdown(props: IDropdown): React.ReactElement {
         </div>
       </button>
       {isOpen ? (
-        <div className="rounded shadow-md absolute pin-t pin-l w-56 rounded bg-white">
+        <div
+          className={`rounded shadow-md absolute pin-t pin-l ${
+            props.width || "w-56"
+          } rounded bg-white`}
+        >
           <ul
             className="list-reset no-scrollbar overflow-y-scroll"
             style={{ maxHeight: "340px" }}
@@ -66,7 +72,7 @@ function Dropdown(props: IDropdown): React.ReactElement {
                   <li
                     key={idx}
                     onClick={() => setActiveItem(item)}
-                    className="relative  w-full p-1 focus:outline-none  focus:bg-blue-100 hover:bg-gray-100 cursor-pointer inline-block"
+                    className="relative  w-full p-2 focus:outline-none  focus:bg-blue-100 hover:bg-gray-100 cursor-pointer inline-block"
                   >
                     <div className="truncate">
                       <div className="font-medium text-gray-800 truncate text-center md:text-left font-medium">
@@ -77,6 +83,22 @@ function Dropdown(props: IDropdown): React.ReactElement {
                 );
               }
             )}
+            <li
+              onClick={() => {
+                setIsOpen(false);
+                setActiveItem({
+                  label: "",
+                  id: "",
+                });
+              }}
+              className="relative w-full p-2 focus:outline-none focus:bg-blue-100 hover:bg-gray-100 cursor-pointer inline-block"
+            >
+              <div className="truncate">
+                <div className="font-medium text-gray-800 truncate text-center md:text-left font-medium">
+                  {props.label}
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       ) : null}

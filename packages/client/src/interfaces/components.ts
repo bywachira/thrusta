@@ -18,4 +18,5 @@ export interface IDropdown {
         id: React.ReactText;
     };
     label: string;
+    width?: string;
 }

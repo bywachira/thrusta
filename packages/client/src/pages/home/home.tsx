@@ -31,7 +31,17 @@ function Home() {
 
   return (
     <div>
-      <p className="text-white font-extrabold text-xl">Processes</p>
+      <div className="flex justify-between">
+        <p className="text-white font-extrabold text-xl">Processes</p>
+        {processes.length > 0 ? (
+          <button
+            onClick={() => history.push("/add-process")}
+            className="button shadow-sm relative inline-flex items-center justify-center px-2.5 py-1.5 text-xs leading-4 font-medium rounded-md text-white bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 transition ease- fin-out transform duration-50 px-8 dark dark font-extrabold"
+          >
+            Add Process
+          </button>
+        ) : null}
+      </div>
       {!isLoading && processes.length === 0 ? (
         <Callout
           emoji={"⚠️"}
