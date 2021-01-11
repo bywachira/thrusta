@@ -167,6 +167,25 @@ export const sleepProcess = (payload: any) => async (dispatch: Dispatch): Promis
         })
 }
 
+export const activateProcess = (process_id: string) => async (dispatch: Dispatch): Promise<any> => {
+    dispatch({
+        type: TYPES.APP_LOADING
+    })
+
+    await client.patch("/process", { process_id })
+        .then(res => {
+            dispatch({
+                type: TYPES.ACTIVATE_PROCESS,
+                payload: res.data
+            })
+        }).catch(err => {
+            dispatch({
+                type: TYPES.APP_ERROR,
+                payload: err.response.data
+            })
+        })
+}
+
 export const getNodes = () => async (dispatch: Dispatch): Promise<any> => {
     dispatch({
         type: TYPES.APP_LOADING,

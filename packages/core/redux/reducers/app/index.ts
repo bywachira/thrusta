@@ -73,9 +73,10 @@ const AppReducer = (state: any = {
                 isLoading: false,
             }
         case TYPES.SLEEP_PROCESS:
+        case TYPES.ACTIVATE_PROCESS:
             return {
                 ...state,
-                processes: state.processes.map((item: any) => item._id !== action.payload.process._id ? action.payload.process : item),
+                processes: [...state.processes.map((item: any) => item._id === action.payload.process._id ? action.payload.process : item)],
                 isLoading: false,
                 process: action.payload.process
             }

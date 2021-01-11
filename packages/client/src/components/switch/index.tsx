@@ -2,25 +2,21 @@ import React from "react";
 
 type SwitchProps = {
   label: string;
-  handleChange: (e: {
-    target: {
-      value: any;
-      checked: boolean;
-    };
-  }) => void;
+  handleChange: (identifier: string, status: boolean) => any;
   value: boolean;
+  identifier: string;
 };
 
 const Switch: React.FC<SwitchProps> = (props): React.ReactElement => {
   return (
-    <div className="">
+    <div className="" key={props.identifier}>
       <label htmlFor="toogleA" className="flex items-center cursor-pointer">
         <div className="relative">
           <input
             id="toogleA"
             type="checkbox"
             className="hidden"
-            onChange={props.handleChange}
+            onChange={() => props.handleChange(props.identifier, !props.value)}
             checked={props.value}
           />
           <div

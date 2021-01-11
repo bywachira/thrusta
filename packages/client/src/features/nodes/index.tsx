@@ -3,6 +3,7 @@
 import React from "react";
 import moment from "moment";
 import { useHistory } from "react-router";
+import timezone from "moment-timezone";
 
 type NodeProps = {
   nodes: any[];
@@ -37,11 +38,13 @@ const Node: React.FC<NodeProps> = (props) => {
               {node.active ? "active" : "inactive"}
             </p>
             <p className="text-white text-sm">
-              Created: {moment(node.createdAt, "YYYYMMDD").fromNow()}
+              Spawned:{" "}
+              {moment(
+                timezone.tz(node.createdAt, timezone.tz.guess())).format("ll")}
             </p>
             <button
               onClick={() => viewNode(node._id)}
-              className="button shadow-sm relative inline-flex items-center justify-center px-2.5 py-1.5 text-xs leading-4 font-medium rounded-md text-white bg-black transition ease- fin-out transform duration-50 px-8 dark dark"
+              className="button shadow-sm relative inline-flex items-center justify-center px-2.5 py-1.5 text-xs leading-4 font-medium rounded-md text-white bg-black transition ease- fin-out transform duration-50 dark dark"
             >
               Details
             </button>

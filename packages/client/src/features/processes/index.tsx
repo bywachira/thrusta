@@ -2,48 +2,59 @@
 
 import React from "react";
 import moment from "moment";
-import Switch from "../../components/switch";
+// import Switch from "../../components/switch";
+import { useDispatch } from "react-redux";
+// import { activateProcess, sleepProcess } from "@thrusta/core/redux/actions/app";
 
 type ProcessProps = {
   processes: any[];
 };
 
 function Processes(props: ProcessProps) {
-  function handleChange(e: any) {
-    console.log(e);
-  }
+  const dispatch = useDispatch();
+
+  // function handleChange(process_id: string, asleep: boolean) {
+  //   // if (asleep) {
+  //   dispatch(activateProcess(process_id));
+  //   // } else {
+  //   //   dispatch(sleepProcess({ process_id }));
+  //   // }
+  // }
 
   return (
-    <div className="flex justify-left p-1 overflow-x-scroll no-scrollbar">
-      {props.processes.map((item) => {
+    <div className="flex justify-left p-1 overflow-x-scroll no-scrollbar rounded-xl">
+      {props.processes.map((item: any, idx: number) => {
         return (
-          <div className="text-white mr-4 w-80 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 p-4 rounded-2xl">
+          <div
+            className="text-white mr-4 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 p-4 rounded-2xl"
+            key={idx}
+            style={{
+              minWidth: "300px !important",
+              maxWidth: "300px !important",
+            }}
+          >
             <div className="flex flex-wrap justify-between place-items-center pb-2">
-              <p className="text-xl font-extrabold">{item.process_name}</p>
-              <div className="flex place-items-center">
-                <p className="bg-yellow-500 mr-2 p-1 rounded-2xl text-sm font-extrabold">
-                  #{item.process_id}
-                </p>
-                <Switch
-                  value={!item.asleep}
-                  handleChange={handleChange}
-                  label=""
-                />
-              </div>
+              <p className="text-white mr-2 p-1 rounded text-xs font-extrabold italic bg-yellow-400">
+                #{item.process_id}
+              </p>
+              <p className="text-xl font-extrabold break-normal">
+                {item.process_name}
+              </p>
             </div>
             <div className="flex flex-wrap justify-between">
               <p className="text-white text-sm font-extrabold">
                 {"⚙️"} {item.commands.length} command
                 {item.commands.length === 1 ? "" : "s"}
               </p>
-              <p className="text-white text-sm font-extrabold bg-gray-900 p-1 rounded-xl">
-                Status: {item.status || "unknown"}
-              </p>
             </div>
             <div className="flex justify-between">
-              <p className="text-white">
-                Last run:{" "}
-                {moment(new Date(item.last_run), "YYYYMMDD").fromNow()}
+              <p className="text-white text-xs">
+                {item.last_run
+                  ? `Last summoned: ${moment(
+                      new Date(item.last_run),
+                      "YYYYMMDD"
+                    ).fromNow()}`
+                  : `Process hasn't been summoned`}
               </p>
             </div>
           </div>
@@ -51,6 +62,15 @@ function Processes(props: ProcessProps) {
       })}
     </div>
   );
+}
+
+{
+  /* <Switch
+                value={!item.asleep}
+                handleChange={handleChange}
+                label=""
+                identifier={item._id}
+              /> */
 }
 
 export default Processes;
