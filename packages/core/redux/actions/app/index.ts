@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import * as TYPES from "../constants";
 import client from "../../client";
 import { Dispatch } from "redux";
@@ -73,6 +75,9 @@ export const createProcess = (payload: any) => async (dispatch: Dispatch): Promi
                 type: TYPES.CREATE_PROCESS,
                 payload: res.data
             })
+            setTimeout(() => {
+                window.location.href = "/"
+            }, 100)
         })
         .catch(err => {
             dispatch({
