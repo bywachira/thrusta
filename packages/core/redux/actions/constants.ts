@@ -21,3 +21,4 @@ export const CURRENT_SERVER_STATUS = "@thrusta/current-server-status";
 export const SIDE_LOADING = "@thrusta/app-secondary-loading";
 export const UPDATING = "@thrusta/update-node";
 export const ACTIVATE_PROCESS = "@thrusta/activate-process";
+export const APP_DELETING = "@thrusta/app-deleting";

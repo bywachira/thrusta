@@ -68,7 +68,6 @@ function AddProcess(): React.ReactElement {
   }
 
   function saveProcess() {
-    console.log("called");
     if (node.id && processName && commands.length > 0) {
       const data = {
         node_id: node.id,
@@ -127,7 +126,7 @@ function AddProcess(): React.ReactElement {
                     />
                     <button
                       onClick={() => removeCommand(idx)}
-                      className="ml-2 bg-white bg-red-600 justify-center font-extrabold w-auto p-2 rounded text-grey-700 shadow-inner flex place-items-center"
+                      className="ml-2 bg-red-600 justify-center font-extrabold w-auto p-2 rounded text-grey-700 shadow-inner flex place-items-center"
                     >
                       remove
                     </button>

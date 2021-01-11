@@ -32,7 +32,7 @@ function Dropdown(props: IDropdown): React.ReactElement {
         tabIndex={1}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <div className="font-medium text-gray-800 truncate text-center md:text-left font-semibold">
+        <div className="font-medium text-gray-800 truncate text-center md:text-left">
           {activeItem.label ? activeItem.label : props.label}
         </div>
 
@@ -75,7 +75,7 @@ function Dropdown(props: IDropdown): React.ReactElement {
                     className="relative  w-full p-2 focus:outline-none  focus:bg-blue-100 hover:bg-gray-100 cursor-pointer inline-block"
                   >
                     <div className="truncate">
-                      <div className="font-medium text-gray-800 truncate text-center md:text-left font-medium">
+                      <div className="font-medium text-gray-800 truncate text-center md:text-left">
                         {item.label}
                       </div>
                     </div>
@@ -94,7 +94,7 @@ function Dropdown(props: IDropdown): React.ReactElement {
               className="relative w-full p-2 focus:outline-none focus:bg-blue-100 hover:bg-gray-100 cursor-pointer inline-block"
             >
               <div className="truncate">
-                <div className="font-medium text-gray-800 truncate text-center md:text-left font-medium">
+                <div className="font-medium text-gray-800 truncate text-center md:text-left">
                   {props.label}
                 </div>
               </div>

@@ -9,10 +9,10 @@ import mongoose from "mongoose"
 
 import config from "./config"
 import v1 from "./v1"
-import parsePayload from "./v1/helpers/parse-payload"
+// import parsePayload from "./v1/helpers/parse-payload"
 import NodeController from "./v1/controllers/node";
 import * as ProcessController from "./v1/controllers/process";
-import { Socket } from "dgram";
+// import { Socket } from "dgram";
 
 mongoose.connect(config.mongo.uri, {
     useNewUrlParser: true,
@@ -36,9 +36,9 @@ APP.set("PORT", process.env.PORT || 5000)
 
 APP.use(cors())
 
-APP.use(bodyParser.json())
+APP.use(bodyParser.json({ limit: "50mb" }))
 
-APP.use(bodyParser.urlencoded({ extended: true }))
+APP.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }))
 
 APP.use(morgan("dev"))
 

@@ -52,7 +52,7 @@ function Input(props: InputProps) {
       <button
         onClick={onSubmit}
         disabled={updating}
-        className="ml-2 bg-green-400 text-white bg-white w-min text-black rounded-xl p-2 font-extrabold"
+        className="ml-2 bg-green-400 text-white w-min rounded-xl p-2 font-extrabold"
       >
         {updating ? "Saving" : "Save"}
       </button>

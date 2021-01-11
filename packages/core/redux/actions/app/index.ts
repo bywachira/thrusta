@@ -129,7 +129,7 @@ export const deleteCommand = (payload: any) => async (dispatch: Dispatch): Promi
 
 export const deleteProcess = (payload: any) => async (dispatch: Dispatch): Promise<any> => {
     dispatch({
-        type: TYPES.APP_LOADING
+        type: TYPES.APP_DELETING
     })
 
     await client.delete("/process/delete-process", payload)
@@ -138,6 +138,9 @@ export const deleteProcess = (payload: any) => async (dispatch: Dispatch): Promi
                 type: TYPES.DELETE_PROCESS,
                 payload: res.data
             })
+            setTimeout(() => {
+                window.location.href = `/`
+            }, 100)
         })
         .catch(err => {
             dispatch({
@@ -313,6 +316,9 @@ export const updateProcess = (process_id: string, payload: any) => async (dispat
                 type: TYPES.EDIT_PROCESS,
                 payload: res.data
             })
+            setTimeout(() => {
+                window.location.href = `/your-process/${res.data.process._id}`
+            }, 100)
         })
         .catch(err => {
             dispatch({

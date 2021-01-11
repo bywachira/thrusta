@@ -15,7 +15,8 @@ const AppReducer = (state: any = {
     command: {},
     current_status: {},
     secondaryLoading: false,
-    updating: false
+    updating: false,
+    deleting: false
 }, action: Action) => {
     switch (action.type) {
         case TYPES.APP_LOADING:
@@ -71,6 +72,7 @@ const AppReducer = (state: any = {
                 ...state,
                 processes: state.processes.filter((item: any) => item._id !== action.payload.process._id),
                 isLoading: false,
+                deleting: false
             }
         case TYPES.SLEEP_PROCESS:
         case TYPES.ACTIVATE_PROCESS:
@@ -126,6 +128,11 @@ const AppReducer = (state: any = {
             return {
                 ...state,
                 process: action.payload.process
+            }
+        case TYPES.APP_DELETING:
+            return {
+                ...state,
+                deleting: true
             }
         default:
             return state

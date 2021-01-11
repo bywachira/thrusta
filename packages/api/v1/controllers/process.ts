@@ -138,8 +138,8 @@ export const editProcess = async (process_name: string | undefined, commands: an
         await process.save()
 
         await commands?.forEach(async (command: any, idx: number) => {
-            if (command._id) {
-                const _command = await Command.findOne({ _id: command._id })
+            if (command.id) {
+                const _command = await Command.findOne({ _id: command.id })
 
                 Object.assign(_command, {
                     command: command.command
@@ -161,8 +161,12 @@ export const editProcess = async (process_name: string | undefined, commands: an
             }
         })
 
+        const getNewProcess = await Process.findOne({ _id: process_id })
+            .populate("commands")
+            .populate("logs")
+
         return {
-            process
+            process: getNewProcess
         }
     } else {
         throw {
@@ -222,11 +226,17 @@ export const deleteProcess = async (process_id: string | undefined) => {
     const process: ProcessDoc | null = await Process.findOne({ _id: process_id });
 
     if (process) {
-        process.commands?.map(async (command: string) => {
-            const $command: CommandDoc | null = await Command.findOne({ _id: command });
+        process.commands?.map(async (command: any) => {
+            const $command: CommandDoc | null = await Command.findOne({ _id: command._id });
 
             await $command?.remove();
         });
+
+        process.logs?.map(async (log: any) => {
+            const $log = await Logs.findOne({ _id: log._id });
+
+            await $log.remove();
+        })
 
         await process.remove();
 

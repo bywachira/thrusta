@@ -11,6 +11,7 @@ import { TabContent } from "../../components/tabs/styles";
 import withNav from "../../hoc/with-nav";
 import { IUseSelector } from "../../interfaces/app";
 import Commands from "./commands";
+import EditProcess from "./edit-process";
 import Logs from "./logs";
 import Process from "./process";
 import Stats from "./stats";
@@ -41,15 +42,16 @@ function SingleProcess(): React.ReactElement {
               <Stats logs={process.logs} commands={process.commands} />
             </div>
             <Tabs>
-              <TabContent label="Commands & Logs">
+              <TabContent label="⚙️Commands & 🪵 Logs">
                 <div className="flex flex-wrap justify-left mt-2">
                   {process._id && <Commands commands={process.commands} />}
                   {process._id && <Logs logs={process.logs} />}
                 </div>
               </TabContent>
-              <TabContent label="Edit Process">
-                <div className="text-white">Content 2</div>
+              <TabContent label="✍️ Edit Process">
+                <EditProcess />
               </TabContent>
+              <TabContent label="⚠️ Danger Zone">Delete Process</TabContent>
             </Tabs>
           </>
         )}
