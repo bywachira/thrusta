@@ -19,6 +19,21 @@ export const fetchAllProcesses = async (user_id: string) => {
     return { processes, count: processes.length };
 };
 
+export const getSingleProcess = async (developer: string, process_id: string) => {
+    const process = await Process.findOne({ developer, _id: process_id }).populate("commands").populate("logs")
+
+    if (process) {
+        return {
+            process
+        }
+    } else {
+        throw {
+            status: 404,
+            message: "Process was not found",
+        }
+    }
+}
+
 export const updateProcessStatus = async (
     user_id: string | undefined,
     process_id: string | undefined,
@@ -109,6 +124,54 @@ export const createProcess = async (process_name: string | undefined, commands: 
     return { process: newProcess };
 };
 
+export const editProcess = async (process_name: string | undefined, commands: any[] | undefined, process_id: string | undefined, user_id: string | undefined) => {
+    const process = await Process.findOne({
+        _id: process_id,
+        developer: user_id
+    })
+
+    if (process) {
+        Object.assign(process, {
+            process_name
+        })
+
+        await process.save()
+
+        await commands?.forEach(async (command: any, idx: number) => {
+            if (command._id) {
+                const _command = await Command.findOne({ _id: command._id })
+
+                Object.assign(_command, {
+                    command: command.command
+                })
+
+                await _command.save()
+            } else {
+                const newCommand = new Command({
+                    process: process._id,
+                    command: command.command,
+                    command_id: randomString.generate(8)
+                })
+
+                await newCommand.save()
+
+                const updatedProcess = await Process.findOneAndUpdate({ _id: process._id }, { $push: { commands: newCommand._id } }, { new: true })
+
+                updatedProcess?.save()
+            }
+        })
+
+        return {
+            process
+        }
+    } else {
+        throw {
+            status: 404,
+            message: "Process was not found"
+        }
+    }
+}
+
 export const addCommand = async (process_id: string | undefined, command: string | undefined) => {
     const newCommand = new Command({
         process: process_id,
@@ -186,6 +249,10 @@ export const addLog = async (process_id: string, log: string, node: string, type
         type,
         account
     });
+
+    const updatedProcess = await Process.findOneAndUpdate({ _id: process_id }, { $push: { logs: newLog._id } }, { new: true })
+
+    await updatedProcess.save();
 
     await newLog.save();
 

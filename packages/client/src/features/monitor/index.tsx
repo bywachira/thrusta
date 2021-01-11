@@ -14,8 +14,6 @@ type MonitorProps = {
 };
 
 function Monitor(props: MonitorProps): React.ReactElement {
-  console.log(timezone.tz.guess());
-
   const dispatch = useDispatch();
 
   React.useEffect(() => {

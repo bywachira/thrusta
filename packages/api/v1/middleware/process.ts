@@ -124,3 +124,27 @@ export const makeProcessSleep = (req: any, res: Response, next: NextFunction) =>
             });
         });
 };
+
+export const getSingleProcess = (req: any, res: Response) => {
+    ProcessController.getSingleProcess(req.account._id, req.params.process_id)
+        .then((Res) => {
+            res.status(200).json(Res)
+        })
+        .catch(err => {
+            res.status(err.status || 500).json({
+                message: err.message
+            })
+        })
+}
+
+export const updateProcess = (req: any, res: Response) => {
+    ProcessController.editProcess(req.body.process_name, req.body.commands, req.params.process_id, req.account._id)
+        .then(Res => {
+            res.status(200).json(Res)
+        })
+        .catch(err => {
+            res.status(err.status || 500).json({
+                message: err.message
+            })
+        })
+}

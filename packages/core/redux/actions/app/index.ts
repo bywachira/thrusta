@@ -281,3 +281,43 @@ export const getLatestMonitorData = (node_id: string) => async (dispatch: Dispat
             })
         })
 }
+
+export const getSingleProcess = (process_id: string) => async (dispatch: Dispatch): Promise<any> => {
+    dispatch({
+        type: TYPES.APP_LOADING,
+    })
+
+    await client.get(`/process/${process_id}`)
+        .then(res => {
+            dispatch({
+                type: TYPES.PROCESS,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: TYPES.APP_ERROR,
+                payload: err.response.data
+            })
+        })
+}
+
+export const updateProcess = (process_id: string, payload: any) => async (dispatch: Dispatch): Promise<any> => {
+    dispatch({
+        type: TYPES.APP_LOADING
+    })
+
+    await client.patch(`/process/edit/${process_id}`, payload)
+        .then(res => {
+            dispatch({
+                type: TYPES.EDIT_PROCESS,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: TYPES.APP_ERROR,
+                payload: err.response.data
+            })
+        })
+}

@@ -7,7 +7,7 @@ export interface IUseSelector {
             active: boolean;
         },
         processes: any[],
-        process: Object,
+        process: any,
         commands: any[],
         command: Object,
         isLoading: boolean;

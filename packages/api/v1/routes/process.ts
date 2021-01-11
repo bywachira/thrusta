@@ -67,4 +67,18 @@ router.patch(
     ProcessMiddleware.makeProcessSleep
 );
 
+router.get(
+    "/process/:process_id",
+    Checkers.isLogggedin,
+    Checkers.isVerified,
+    ProcessMiddleware.getSingleProcess
+)
+
+router.patch(
+    "/process/edit/:process_id",
+    Checkers.isLogggedin,
+    Checkers.isVerified,
+    ProcessMiddleware.updateProcess
+)
+
 export default router;

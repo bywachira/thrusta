@@ -43,7 +43,7 @@ code {
 
 input:checked~.toggle__dot {
   transform: translateX(100%);
-  background-color: #f59e0b;
+  background-color: #10b981;
 }
 
 .no-scrollbar::-webkit-scrollbar {

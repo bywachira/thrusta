@@ -122,6 +122,11 @@ const AppReducer = (state: any = {
                 updating: true,
                 close: false
             }
+        case TYPES.PROCESS:
+            return {
+                ...state,
+                process: action.payload.process
+            }
         default:
             return state
     }

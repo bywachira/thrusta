@@ -4,6 +4,7 @@ import React from "react";
 import moment from "moment";
 // import Switch from "../../components/switch";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 // import { activateProcess, sleepProcess } from "@thrusta/core/redux/actions/app";
 
 type ProcessProps = {
@@ -38,7 +39,9 @@ function Processes(props: ProcessProps) {
                 #{item.process_id}
               </p>
               <p className="text-xl font-extrabold break-normal">
-                {item.process_name}
+                <Link to={`/your-process/${item._id}`}>
+                  {item.process_name}
+                </Link>
               </p>
             </div>
             <div className="flex flex-wrap justify-between">

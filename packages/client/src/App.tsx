@@ -6,6 +6,7 @@ import PrivateRoute from "./hoc/private-route";
 import HomePage from "./pages/home";
 import SingleNodePage from "./pages/single-node";
 import AddProcessPage from "./pages/add-process";
+import SingleProcessPage from "./pages/single-process";
 
 setup(React.createElement);
 
@@ -25,6 +26,11 @@ function App() {
             exact={true}
             path="/add-process"
             component={AddProcessPage}
+          />
+          <PrivateRoute
+            exact={true}
+            path="/your-process/:process_id"
+            component={SingleProcessPage}
           />
         </Switch>
       </Router>
