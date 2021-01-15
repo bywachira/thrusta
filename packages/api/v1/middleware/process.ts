@@ -1,5 +1,6 @@
 import { Response, NextFunction } from "express"
 import * as ProcessController from "../controllers/process";
+import { getRanges } from "../helpers/date-format";
 
 export const fetchActiveProcessesMw = (req: any, res: Response, next: NextFunction) => {
     ProcessController.fetchActiveProcesses(req.account._id)
@@ -85,7 +86,7 @@ export const deleteCommand = (req: any, res: Response, next: NextFunction) => {
 };
 
 export const deleteProcess = (req: any, res: Response, next: NextFunction) => {
-    ProcessController.deleteProcess(req.body.process_id)
+    ProcessController.deleteProcess(req.params.process_id)
         .then((Res) => {
             res.status(201).json(Res);
         })
@@ -145,6 +146,23 @@ export const updateProcess = (req: any, res: Response) => {
         .catch(err => {
             res.status(err.status || 500).json({
                 message: err.message
+            })
+        })
+}
+
+export const getMonitorData = (req: any, res: Response) => {
+    console.log(req.query)
+    const range: any[] = getRanges(req.query.range_id)
+
+    ProcessController.getChartData(req.query.node_id, new Date(range[0]), new Date(range[1]), req.query.timezone, req.query.range_id)
+        .then(Res => {
+            res.status(200).json(Res)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(err.status || 500).json({
+                message: err.message,
+                ok: false
             })
         })
 }

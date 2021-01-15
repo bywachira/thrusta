@@ -11,6 +11,7 @@ import { TabContent } from "../../components/tabs/styles";
 import withNav from "../../hoc/with-nav";
 import { IUseSelector } from "../../interfaces/app";
 import Commands from "./commands";
+import DeleteProcess from "./delete";
 import EditProcess from "./edit-process";
 import Logs from "./logs";
 import Process from "./process";
@@ -51,7 +52,9 @@ function SingleProcess(): React.ReactElement {
               <TabContent label="✍️ Edit Process">
                 <EditProcess />
               </TabContent>
-              <TabContent label="⚠️ Danger Zone">Delete Process</TabContent>
+              <TabContent label="⚠️ Danger Zone">
+                {process._id && <DeleteProcess process_id={process._id} />}
+              </TabContent>
             </Tabs>
           </>
         )}

@@ -64,7 +64,7 @@ const Node: React.FC<NodeProps> = ({ node }): React.ReactElement => {
   const [show, setShow] = useState(false);
 
   return (
-    <div className="rounded-xl text-white w-1/2 p-4 mt-4">
+    <div className="rounded-xl text-white w-full p-4 mt-4 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500">
       <div className="flex justify-between">
         <p className="text-white bg-black w-min p-2 font-extrabold rounded-xl">
           #{node?.node_id}
@@ -86,7 +86,7 @@ const Node: React.FC<NodeProps> = ({ node }): React.ReactElement => {
         )}
       </div>
       <div className="flex place-items-center">
-        <p className="text-4xl mt-2 font-extrabold">
+        <p className="text-6xl mt-2 font-extrabold">
           {node.node_name ? node.node_name : "No Name"}
         </p>
         <p

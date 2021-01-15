@@ -16,7 +16,8 @@ const AppReducer = (state: any = {
     current_status: {},
     secondaryLoading: false,
     updating: false,
-    deleting: false
+    deleting: false,
+    chart_data: {}
 }, action: Action) => {
     switch (action.type) {
         case TYPES.APP_LOADING:
@@ -133,6 +134,23 @@ const AppReducer = (state: any = {
             return {
                 ...state,
                 deleting: true
+            }
+        case TYPES.LOAD_CHART_DATA:
+            return {
+                ...state,
+                gettingData: true
+            }
+        case TYPES.GET_CHART_DATA:
+            return {
+                ...state,
+                chart_date: action.payload.chart_date,
+                gettingData: false
+            }
+        case TYPES.CHART_DATA_ERROR:
+            return {
+                ...state,
+                gettingData: false,
+                message: action.payload.message
             }
         default:
             return state

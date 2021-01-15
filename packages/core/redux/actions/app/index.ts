@@ -132,7 +132,7 @@ export const deleteProcess = (payload: any) => async (dispatch: Dispatch): Promi
         type: TYPES.APP_DELETING
     })
 
-    await client.delete("/process/delete-process", payload)
+    await client.delete(`/process/delete-process/${payload}`)
         .then(res => {
             dispatch({
                 type: TYPES.DELETE_PROCESS,
@@ -323,6 +323,26 @@ export const updateProcess = (process_id: string, payload: any) => async (dispat
         .catch(err => {
             dispatch({
                 type: TYPES.APP_ERROR,
+                payload: err.response.data
+            })
+        })
+}
+
+export const getChartData = (node_id: string, range: string) => async (dispatch: Dispatch): Promise<any> => {
+    dispatch({
+        type: TYPES.LOAD_CHART_DATA,
+    })
+
+    await client.get(`/process/chart?node_id=${node_id}&range_id=${range}`)
+        .then(res => {
+            dispatch({
+                type: TYPES.GET_CHART_DATA,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: TYPES.CHART_DATA_ERROR,
                 payload: err.response.data
             })
         })

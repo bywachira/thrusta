@@ -30,5 +30,6 @@ export interface IUseSelector {
         },
         updating: boolean;
         close: boolean;
+        deleting: boolean;
     }
 }

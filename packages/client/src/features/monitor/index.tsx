@@ -25,9 +25,9 @@ function Monitor(props: MonitorProps): React.ReactElement {
   const { current_status } = useSelector((state: IUseSelector) => state.app);
 
   return (
-    <div className="text-white bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 p-4 w-1/2 rounded-xl">
+    <div className="text-white bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 p-4 w-full rounded-xl">
       <p className="text-xl font-extrabold">Server Monitoring</p>
-      <div className="flex justify-center flex-wrap">
+      <div className="flex justify-between flex-wrap">
         {/* <CPUData
           cpu={
             current_status.cpu || {
@@ -41,12 +41,12 @@ function Monitor(props: MonitorProps): React.ReactElement {
           <div className="m-2">
             <p className="text-center text-3xl">CPU</p>
             <p
-              className={`text-6xl ${
+              className={`text-7xl ${
                 Math.round(current_status.cpu?.cpu_usage) >= 80
                   ? "text-red-700"
                   : Math.round(current_status.cpu?.cpu_usage) >= 50
                   ? "text-yellow-600"
-                  : "text-green-400"
+                  : "text-white"
               } font-extrabold`}
             >
               {Math.round(current_status.cpu?.cpu_usage) || 0}%
@@ -56,7 +56,7 @@ function Monitor(props: MonitorProps): React.ReactElement {
         {current_status.memory?.memory_used ? (
           <div className="m-2">
             <p className="text-center text-3xl text-grey-600">Memory</p>
-            <p className="text-6xl font-extrabold">
+            <p className="text-7xl font-extrabold">
               {Math.round(current_status.memory?.memory_used / 1000000) || 0}
               mb
             </p>
@@ -65,7 +65,7 @@ function Monitor(props: MonitorProps): React.ReactElement {
         {current_status.uptime ? (
           <div className="m-2">
             <p className="text-center text-3xl text-grey-600">Uptime</p>
-            <p className={`text-6xl font-extrabold`}>
+            <p className={`text-7xl font-extrabold`}>
               {Math.round(
                 parseInt(current_status.uptime || "0", 10) / 3600000000000
               )}

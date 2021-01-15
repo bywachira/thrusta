@@ -47,7 +47,7 @@ router.delete(
 );
 
 router.delete(
-    "/process/delete-process",
+    "/process/delete-process/:process_id",
     Checkers.isLogggedin,
     Checkers.isVerified,
     ProcessMiddleware.deleteProcess
@@ -66,6 +66,13 @@ router.patch(
     Checkers.isVerified,
     ProcessMiddleware.makeProcessSleep
 );
+
+router.get(
+    "/process/chart",
+    Checkers.isLogggedin,
+    Checkers.isVerified,
+    ProcessMiddleware.getMonitorData
+)
 
 router.get(
     "/process/:process_id",

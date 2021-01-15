@@ -3,6 +3,8 @@ import Process, { ProcessDoc } from "../../models/process";
 import Command, { CommandDoc } from "../../models/command";
 import Logs from "../../models/logs";
 import Node, { NodeDoc } from "../../models/node";
+import Monitor from "../../models/monitors";
+import { formatDate } from "../helpers/date-format";
 
 export const fetchActiveProcesses = async (user_id: string) => {
     const processes = await Process.find({ asleep: false, developer: user_id })
@@ -14,13 +16,19 @@ export const fetchActiveProcesses = async (user_id: string) => {
 export const fetchAllProcesses = async (user_id: string) => {
     const processes = await Process.find({ developer: user_id })
         .populate("commands")
-        .populate("logs");
+        .populate("logs")
 
     return { processes, count: processes.length };
 };
 
 export const getSingleProcess = async (developer: string, process_id: string) => {
-    const process = await Process.findOne({ developer, _id: process_id }).populate("commands").populate("logs")
+    const process = await Process.findOne({ developer, _id: process_id }).populate("commands").populate({
+        path: "logs",
+        options: {
+            limit: 10,
+            sort: { createdAt: -1 },
+        }
+    });
 
     if (process) {
         return {
@@ -288,3 +296,60 @@ export const makeProcessSleep = async (process_id: string) => {
         process,
     };
 };
+
+export const getChartData = async (node_id: string, start_date: DateConstructor | any, end_date: DateConstructor | any, timezone: string, period: string) => {
+    const monitors = await Monitor.find({ node: node_id, last_ping: { $gte: start_date, $lte: end_date } }).sort({ createdAt: 1 })
+
+    let cpu = []
+    let memory = []
+    let network = []
+    let disk = []
+
+    for (let i = 0; i < monitors.length; i++) {
+        let record = monitors[i]
+        const date = formatDate(period, timezone, record.last_ping)
+
+        cpu.push(
+            {
+                usage: record.cpu.cpu_usage,
+                period: date
+            }
+        )
+
+        memory.push({
+            used: record.memory.memory_used,
+            period: date
+        })
+
+        let _network = record.network.map((item: any) => {
+            return {
+                name: item.name || 0,
+                transmit: item.transmit || 0,
+                received: item.received || 0,
+                period: date
+            }
+        })
+
+        network.push(_network)
+
+        let _disk = record.disk.map((item: any) => {
+            return {
+                name: item.name || 0,
+                reads: item.reads || 0,
+                writes: item.received || 0,
+                period: date
+            }
+        })
+        disk.push(_disk)
+    }
+
+    return {
+        chart_date: {
+            cpu,
+            network,
+            memory,
+            disk
+        },
+
+    }
+}
