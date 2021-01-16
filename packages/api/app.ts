@@ -52,12 +52,21 @@ const wsServer = new WebSocketServer({
     httpServer: SERVER,
 });
 
+wsServer.on("connect", (connection: SocketServer.connection) => {
+    console.log(connection.remoteAddress)
+})
+
 wsServer.on("request", (request: SocketServer.request): any => {
     const connection = request.accept(undefined, request.origin)
+
+    connection.on("pong", (data: any) => {
+        console.log(data)
+    })
 
     connection.on("ping", (data: any) => {
         console.log(data)
     })
+
     connection.on("message", (data: any) => {
 
         const payload = JSON.parse(data.utf8Data)

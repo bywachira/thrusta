@@ -5,7 +5,6 @@ import Logs from "../../models/logs";
 import Node, { NodeDoc } from "../../models/node";
 import Monitor from "../../models/monitors";
 import { formatDate } from "../helpers/date-format";
-import { filterByPeriod } from "../helpers/chart-data";
 import { washChartData } from "../helpers/clean-chart-data";
 
 export const fetchActiveProcesses = async (user_id: string) => {
@@ -302,8 +301,6 @@ export const makeProcessSleep = async (process_id: string) => {
 export const getChartData = async (node_id: string, start_date: DateConstructor | any, end_date: DateConstructor | any, timezone: string, period: string) => {
     const monitors = await Monitor.find({ node: node_id, last_ping: { $gte: start_date, $lte: end_date } }).sort({ createdAt: 1 })
 
-    let cpu = []
-    let memory = []
     let network = []
     let disk = []
     let _cpu: any[] = []

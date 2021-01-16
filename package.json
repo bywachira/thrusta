@@ -14,6 +14,11 @@
     "api:dev": "yarn --cwd packages/api dev",
     "api:build": "yarn --cwd packages/api build",
     "client:start": "yarn --cwd packages/client start",
-    "client:build": "yarn --cwd packages/client build"
+    "client:build": "yarn --cwd packages/client build",
+    "cli:start": "yarn --cwd packages/cli start",
+    "cli:create": "yarn --cwd packages/cli create",
+    "cli:build": "yarn --cwd packages/cli build",
+    "cli:local": "yarn --cwd packages/cli local",
+    "cli:refresh": "yarn --cwd packages/cli refresh"
   }
 }
