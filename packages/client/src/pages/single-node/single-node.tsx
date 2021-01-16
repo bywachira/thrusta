@@ -10,6 +10,7 @@ import withNav from "../../hoc/with-nav";
 import { IUseSelector } from "../../interfaces/app";
 import Node from "./node";
 import Tabs from "../../components/tabs";
+import NodeCharts from "./charts";
 import { TabContent } from "../../components/tabs/styles";
 
 function SingleNode(): React.ReactElement {
@@ -22,7 +23,9 @@ function SingleNode(): React.ReactElement {
     dispatch(getChartData(params.node_id, "past-month"));
   }, []);
 
-  const { node, isLoading } = useSelector((state: IUseSelector) => state.app);
+  const { node, isLoading, chart_data } = useSelector(
+    (state: IUseSelector) => state.app
+  );
 
   //   bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500
 
@@ -39,11 +42,11 @@ function SingleNode(): React.ReactElement {
             </div>
             <div>
               <Tabs>
+                <TabContent label="🕵️ Monitoring">
+                  <NodeCharts chart_data={chart_data} node_id={node?._id} />
+                </TabContent>
                 <TabContent label="📝 Summary">
                   <Monitor node_id={node.node_id} />
-                </TabContent>
-                <TabContent label="🕵️ Monitoring">
-                  <div className="monitoring"></div>
                 </TabContent>
               </Tabs>
             </div>

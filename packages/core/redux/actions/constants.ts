@@ -23,5 +23,5 @@ export const UPDATING = "@thrusta/update-node";
 export const ACTIVATE_PROCESS = "@thrusta/activate-process";
 export const APP_DELETING = "@thrusta/app-deleting";
 export const GET_CHART_DATA = "@thrusta/chart-data";
-export const LOAD_CHART_DATA = "@thrusta/chart-data";
+export const LOAD_CHART_DATA = "@thrusta/chart-data-load";
 export const CHART_DATA_ERROR = "@thrusta/chart-data-error";

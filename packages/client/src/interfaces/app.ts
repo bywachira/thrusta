@@ -5,6 +5,7 @@ export interface IUseSelector {
             node_name?: string;
             node_id: string;
             active: boolean;
+            _id: string;
         },
         processes: any[],
         process: any,
@@ -31,5 +32,12 @@ export interface IUseSelector {
         updating: boolean;
         close: boolean;
         deleting: boolean;
+        chart_data: {
+            cpu: any[],
+            memory: any[],
+            network: any[],
+            disk: any[],
+            period: string;
+        }
     }
 }

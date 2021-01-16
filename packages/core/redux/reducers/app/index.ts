@@ -18,7 +18,7 @@ const AppReducer = (state: any = {
     updating: false,
     deleting: false,
     chart_data: {}
-}, action: Action) => {
+}, action: Action): any => {
     switch (action.type) {
         case TYPES.APP_LOADING:
             return {
@@ -143,8 +143,10 @@ const AppReducer = (state: any = {
         case TYPES.GET_CHART_DATA:
             return {
                 ...state,
-                chart_date: action.payload.chart_date,
-                gettingData: false
+                chart_data: Object.assign(state.chart_data, {
+                    ...action.payload
+                }),
+                gettingData: false,
             }
         case TYPES.CHART_DATA_ERROR:
             return {

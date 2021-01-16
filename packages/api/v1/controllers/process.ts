@@ -5,6 +5,8 @@ import Logs from "../../models/logs";
 import Node, { NodeDoc } from "../../models/node";
 import Monitor from "../../models/monitors";
 import { formatDate } from "../helpers/date-format";
+import { filterByPeriod } from "../helpers/chart-data";
+import { washChartData } from "../helpers/clean-chart-data";
 
 export const fetchActiveProcesses = async (user_id: string) => {
     const processes = await Process.find({ asleep: false, developer: user_id })
@@ -304,20 +306,34 @@ export const getChartData = async (node_id: string, start_date: DateConstructor 
     let memory = []
     let network = []
     let disk = []
+    let _cpu: any[] = []
+    let _memory: any[] = []
 
     for (let i = 0; i < monitors.length; i++) {
         let record = monitors[i]
         const date = formatDate(period, timezone, record.last_ping)
 
-        cpu.push(
-            {
-                usage: record.cpu.cpu_usage,
-                period: date
-            }
-        )
 
-        memory.push({
-            used: record.memory.memory_used,
+        // const _cpu = record.cpu.map((cpu_record: any) => {
+        //     return {
+        //         usage: cpu_record.cpu.cpu_usage
+        //     }
+        // })
+
+        // const cleanCPUData = filterByPeriod(date, _cpu)
+
+        _cpu.push({ usage: record.cpu.cpu_usage, period: date })
+
+
+        // const _memory = record.memory.map((memory_record: any) => {
+        //     return {
+        //         usage: memory_record.memory.memory_used
+        //     }
+        // })
+
+
+        _memory.push({
+            usage: record.memory.memory_used,
             period: date
         })
 
@@ -343,13 +359,24 @@ export const getChartData = async (node_id: string, start_date: DateConstructor 
         disk.push(_disk)
     }
 
-    return {
-        chart_date: {
-            cpu,
-            network,
-            memory,
-            disk
-        },
+    const cleanCPUData = washChartData(_cpu)
 
+    // cpu.push(
+    //     {
+    //         values: [Math.round(cleanCPUData.min), Math.round(cleanCPUData.average), Math.round(cleanCPUData.max)],
+    //         period: cleanCPUData.period
+    //     }
+    // )
+
+    const cleanMemoryData = washChartData(_memory, 1000000);
+
+    return {
+        chart_data: {
+            cpu: cleanCPUData,
+            network,
+            memory: cleanMemoryData,
+            disk,
+            period
+        },
     }
 }

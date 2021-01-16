@@ -1,6 +1,5 @@
 import moment from "moment";
 import timezone from "moment-timezone";
-import { format } from "morgan";
 
 export const getRanges = (period: string): string[] => {
     let currentDate = new Date()
@@ -26,17 +25,17 @@ export const getRanges = (period: string): string[] => {
     }
 }
 
-export const formatDate = (period: string, user_timezone: string, date: string): string => {
+export const formatDate = (period: string, user_timezone: string, date: string): string | number => {
     let tz = timezone.tz(date, user_timezone);
-    let formatDate: string = "";
+    let formatDate: string | number = ""
     let months = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
     switch (period) {
         case "past-month":
-            formatDate = months[parseInt(moment(date).format("MM"), 10) - 1]
+            formatDate = moment(new Date(date)).format("ll")
             break;
         case "6-months":
-            formatDate = months[parseInt(moment(date).format("MM"), 10) - 1]
+            formatDate = months[new Date().getMonth()]
             break;
         case "past-year":
             formatDate = moment(date).format("YYYY")

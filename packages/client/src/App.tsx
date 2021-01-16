@@ -12,7 +12,7 @@ setup(React.createElement);
 
 function App() {
   return (
-    <div className="app-container">
+    <div className="app-container" id="app-container">
       <Router>
         <Switch>
           <Route exact={true} path="/zen" component={ZenMode} />

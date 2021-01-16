@@ -23,6 +23,12 @@ function Dropdown(props: IDropdown): React.ReactElement {
     }
   }, [activeItem]);
 
+  useEffect(() => {
+    if (props.activeItem?.id) {
+      setActiveItem(props.activeItem);
+    }
+  }, [props.activeItem]);
+
   return (
     <>
       <button
@@ -52,7 +58,7 @@ function Dropdown(props: IDropdown): React.ReactElement {
       </button>
       {isOpen ? (
         <div
-          className={`rounded shadow-md absolute pin-t pin-l ${
+          className={`rounded z-50 shadow-md absolute pin-t pin-l ${
             props.width || "w-56"
           } rounded bg-white`}
         >

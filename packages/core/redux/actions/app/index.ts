@@ -3,6 +3,7 @@
 import * as TYPES from "../constants";
 import client from "../../client";
 import { Dispatch } from "redux";
+import momentTimezone from "moment-timezone"
 
 export const getActiveProcess = () => async (dispatch: Dispatch): Promise<any> => {
     dispatch({
@@ -333,11 +334,11 @@ export const getChartData = (node_id: string, range: string) => async (dispatch:
         type: TYPES.LOAD_CHART_DATA,
     })
 
-    await client.get(`/process/chart?node_id=${node_id}&range_id=${range}`)
+    await client.get(`/process/chart?node_id=${node_id}&range_id=${range}&timezone=${momentTimezone.tz.guess()}`)
         .then(res => {
             dispatch({
                 type: TYPES.GET_CHART_DATA,
-                payload: res.data
+                payload: res.data.chart_data
             })
         })
         .catch(err => {
